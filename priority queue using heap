@@ -1,0 +1,82 @@
+package com.company;
+
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        abc tree = new abc();
+        tree.add(2);
+        tree.add(20);
+        tree.add(14);
+        tree.add(12);
+        tree.add(31);
+        tree.add(7);
+        tree.add(11);
+        tree.add(13);
+     System.out.println(tree.data);
+     tree.remove();
+     System.out.println(tree.data);
+    }
+}
+class abc {
+    ArrayList<Integer>data=new ArrayList<>();
+    public void add(int val){
+        data.add(val);
+        upheapyfy(data.size()-1);
+    }
+    public void upheapyfy(int i){
+        if (i==0){
+            return;
+        }
+        int pi =(i-1)/2;
+        if (data.get(pi)>data.get(i)){
+            swap(i,pi);
+            upheapyfy(pi);
+        }
+    }
+    public void swap(int i ,int j){
+        int ith =data.get(i);
+        int jth =data.get(j);
+        data.set(j,ith);
+        data.set(i,jth);
+    }
+    public int size(){
+        return data.size();
+    }
+    public int remove(){
+        if (this.size()==0){
+            System.out.print("underflow");
+            return -1;
+        }
+        swap(0,data.size()-1);
+        int val =data.remove(data.size()-1);
+        downheapify(0);
+        return val;
+    }
+    public void downheapify(int i){
+        int min =i;
+        int lc =2*i+1;
+        int rc =2*i+2;
+        if (lc< data.size()&&data.get(lc)<data.get(min)){
+            min =lc;
+        }
+        if (rc<data.size()&&data.get(rc)<data.get(min)){
+            min=rc;
+        }
+        if (min!=i){
+            swap(i,min);
+            downheapify(min);
+        }
+    }
+    public int peek(){
+        if (this.size()==0){
+            System.out.print("underflow");
+            return -1;
+        }
+        return data.get(0);
+    }
+
+}
